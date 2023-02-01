@@ -1,6 +1,7 @@
 import {app} from './src/app.js'
 import { connectMongo } from "./src/services/connection.js";
 
+
 const start = async () => {
   try {
     await connectMongo();

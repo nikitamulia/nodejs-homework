@@ -4,6 +4,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import { errorHandler } from "./helpers/apiHelp.js";
 
+
 import {contactsRouter} from './routes/api/contacts.js'
 
 const app = express()
@@ -21,6 +22,8 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
 })
 
+
 app.use(errorHandler);
 
 export {app};
+
