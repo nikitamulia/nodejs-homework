@@ -1,65 +1,59 @@
 import {
-    addContact,
-    getContactById,
-    listContacts,
-    removeContact,
-    updateContact,
-} from "../models/contacts.js";
- 
-const getAllCont = async (_, res) => {
-    const data = await listContacts();
-    res.status(200).json({ data });
+  listContacts,
+  getContactById,
+  addContact,
+  removeContact,
+  updateContact,
+  updateStatusContact,
+} from "../services/contacts.js";
+
+export const getContactsController = async (req, res, next) => {
+  const contacts = await listContacts();
+  res.status(200).json({ contacts, status: "success" });
 };
- 
-const getContById = async (req, res) => {
-    const { contactId } = req.params;
-    const data = await getContactById(contactId);
-    if (!data.length) {
-      return res.status(404).json({
-        code: 404,
-        message: `Contact with id: ${contactId} not found`,
-      });
-    }
-    res.status(200).json({ code: 200, data });
+
+export const getContactByIdNewController = async (req, res, next) => {
+  const contact = await getContactById(req.params.contactId);
+  if (!contact) {
+    return res.status(400).json({ message: "Contact not found" });
+  }
+  res.status(200).json({ contact, status: "success" });
 };
- 
-const removeCont = async (req, res) => {
-    const { contactId } = req.params;
-    const data = await removeContact(contactId);
- 
-    if (!data) {
-      return res.status(404).json({
-        code: 404,
-        message: `Contact with id: ${contactId} not found`,
-      });
-    }
- 
-    res.status(200).json({
-      code: 200,
-      contactId,
-      message: "Contact deleted successfully!",
-    });
+
+export const addNewContactController = async (req, res, next) => {
+  const { name, email, phone } = req.body;
+  const contact = await addContact(name, email, phone);
+  res.status(201).json({ contact, status: "success" });
 };
- 
-const addCont = async (req, res) => {
-    const body = req.body;
-    const data = await addContact(body);
-    res.status(201).json({ code: 201, data });
+
+export const deleteContactController = async (req, res, next) => {
+  const { contactId } = req.params;
+  const response = await removeContact(contactId);
+  if (!response) {
+    return res.status(400).json({ message: "Contact not found" });
+  }
+  res.status(200).json({ status: "success" });
 };
- 
-const updateCont = async (req, res) => {
-    const { contactId } = req.params;
-    const body = req.body;
-    const data = await updateContact(contactId, body);
- 
-    if (!data) {
-      return res
-        .status(404)
-        .json({ message: `Contact with id: ${contactId} not found` });
-    }
- 
-    res.status(200).json({ code: 200, data });
+
+export const changeContactsController = async (req, res) => {
+  const { contactId } = req.params;
+  const { name, email, phone } = req.body;
+  const contact = await updateContact(contactId, { name, email, phone });
+  if (!contact) {
+    return res.status(400).json({ message: "Contact not found" });
+  }
+  res.status(200).json({ contact, status: "success" });
 };
- 
-export { getAllCont, getContById, removeCont, addCont, updateCont };
- 
+
+export const addFavoriteContactController = async (req, res) => {
+  const { contactId } = req.params;
+  const { favorite } = req.body;
+  if (!favorite) {
+    return res.status(400).json({ message: "Missing field favorite" });
+  }
+  const contact = await updateStatusContact(contactId, favorite);
+  if (!contact) {
+    return res.status(400).json({ message: "Contact not found" });
+  }
+  res.status(200).json({ contact, status: "success" });
+};
