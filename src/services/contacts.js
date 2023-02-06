@@ -1,6 +1,7 @@
 import { Contact } from "../models/contacts.js";
 import { WrongParamsError } from "../helpers/error.js";
 
+
 export async function listContacts(owner, page, limit, favorite) {
   let query = { owner };
   if (favorite) {
@@ -13,11 +14,13 @@ export async function listContacts(owner, page, limit, favorite) {
 }
 export async function getContactById(contactId, owner) {
   const contactById = await Contact.findById({ contactId, owner }, { __v: 0 });
+
   if (!contactById) {
     throw new WrongParamsError("contact by id not found");
   }
   return contactById;
 }
+
 export async function removeContact(contactId, owner) {
   return await Contact.findByIdAndDelete(contactId, owner);
 }
@@ -50,5 +53,6 @@ export async function updateStatusContact(contactId, { favorite }, owner) {
     },
     { new: true }
   );
+
   return updateContact;
 }

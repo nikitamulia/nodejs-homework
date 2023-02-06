@@ -18,6 +18,7 @@ export const contactValidation = (req, res, next) => {
     next(new ValidationError(error.details));
   }
   next();
+
 };
 
 export const userValidation = (req, res, next) => {
@@ -35,4 +36,5 @@ export const userValidation = (req, res, next) => {
     next(new ValidationError(JSON.stringify(error.details)));
   }
   next();
+
 };

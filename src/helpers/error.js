@@ -1,3 +1,4 @@
+
 export class CastError extends Error {
   constructor(message) {
     super(message);
@@ -31,3 +32,4 @@ export class NotAuthorizeError extends CastError {
     this.status = 401;
   }
 }
+
