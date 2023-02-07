@@ -11,4 +11,4 @@ export async function connectMongo() {
     console.log("err", error);
   }
 }
-// `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.yp9y5jj.mongodb.net/test`
+

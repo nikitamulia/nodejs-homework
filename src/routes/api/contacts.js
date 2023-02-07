@@ -10,7 +10,11 @@ import {
 import { contactValidation } from "./midlewares/validation.js";
 import { asyncWrapper } from "../../helpers/apiHelp.js";
 
+import {authMiddleware} from "./midlewares/authMiddlewares.js";
+
 const router = express.Router();
+router.use(authMiddleware);
+
 
 router.get("/", asyncWrapper(getContactsController));
 
