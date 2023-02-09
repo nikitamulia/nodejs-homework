@@ -1,5 +1,5 @@
-import { Contact } from "../models/contacts.js";
-import { WrongParamsError } from "../helpers/error.js";
+import { Contact } from "../models/contactModel.js";
+import { WrongParamsError } from "../helpers/errors.js";
 
 
 export async function listContacts(owner, page, limit, favorite) {
@@ -53,6 +53,6 @@ export async function updateStatusContact(contactId, { favorite }, owner) {
     },
     { new: true }
   );
-
   return updateContact;
 }
+
