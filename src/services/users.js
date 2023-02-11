@@ -15,6 +15,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+
 export async function registration(email, password) {
   const user = await User.findOne({ email });
   if (user) throw new RegistrationConflictError("Email in use");
@@ -104,13 +105,13 @@ export async function login(email, password) {
     process.env.JWT_SECRET
   );
   user.token = token;
+
   await User.findByIdAndUpdate(user._id, { token });
 
   const resUser = {
     email: user.email,
     subscription: user.subscription,
   };
-
   return { token, resUser };
 }
 

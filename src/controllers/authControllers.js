@@ -6,6 +6,7 @@ import {
   changeAvatar,
   verifityUser,
   repeatVerifityUser,
+
 } from "../services/users.js";
 
 export const registrationController = async (req, res, next) => {
@@ -71,3 +72,4 @@ export const repeatverifyController = async (req, res, next) => {
     },
   });
 };
+
