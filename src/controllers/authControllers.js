@@ -4,6 +4,9 @@ import {
   logout,
   changeSubscription,
   changeAvatar,
+  verifityUser,
+  repeatVerifityUser,
+
 } from "../services/users.js";
 
 export const registrationController = async (req, res, next) => {
@@ -51,3 +54,22 @@ export async function avatarController(req, res) {
     },
   });
 }
+export async function verifyController(req, res) {
+  const { verificationToken } = req.params;
+  await verifityUser(verificationToken);
+  res.status(200).json({
+    user: {
+      message: "Verification successful",
+    },
+  });
+}
+export const repeatverifyController = async (req, res, next) => {
+  const { email } = req.body;
+  await repeatVerifityUser(email);
+  res.status(200).json({
+    user: {
+      message: "Verification email sent",
+    },
+  });
+};
+
